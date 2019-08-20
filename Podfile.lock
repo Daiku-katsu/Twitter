@@ -1,0 +1,62 @@
+PODS:
+  - Kingfisher (5.3.1)
+  - NCMB (3.0.1)
+  - NYXImagesKit (2.3)
+  - RxAtomic (4.4.2)
+  - RxCocoa (4.4.2):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.4.2):
+    - RxAtomic (>= 4.4.2, ~> 4.4)
+  - SideMenu (5.0.3)
+  - SVProgressHUD (2.2.5)
+  - SwiftDate (6.0.1)
+  - "UITextView+Placeholder (1.2.1)"
+
+DEPENDENCIES:
+  - Kingfisher
+  - NCMB (from `https://github.com/NIFTYCloud-mbaas/ncmb_ios.git`, branch `develop`)
+  - NYXImagesKit
+  - RxCocoa
+  - RxSwift
+  - SideMenu
+  - SVProgressHUD
+  - SwiftDate
+  - "UITextView+Placeholder"
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Kingfisher
+    - NYXImagesKit
+    - RxAtomic
+    - RxCocoa
+    - RxSwift
+    - SideMenu
+    - SVProgressHUD
+    - SwiftDate
+    - "UITextView+Placeholder"
+
+EXTERNAL SOURCES:
+  NCMB:
+    :branch: develop
+    :git: https://github.com/NIFTYCloud-mbaas/ncmb_ios.git
+
+CHECKOUT OPTIONS:
+  NCMB:
+    :commit: c090411e8135708b505c46c145772cf39c5ca464
+    :git: https://github.com/NIFTYCloud-mbaas/ncmb_ios.git
+
+SPEC CHECKSUMS:
+  Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
+  NCMB: 470e5d51a643b0b77487792c179c1454ee0a55ae
+  NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
+  RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
+  RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
+  RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
+  SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftDate: 2b3ef6b8fc30c22391033d1acad5622a51660016
+  "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
+
+PODFILE CHECKSUM: 04547364029c56085987174b7f8fdfa6e5fda731
+
+COCOAPODS: 1.6.1
