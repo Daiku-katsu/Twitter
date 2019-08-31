@@ -16,7 +16,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
 
     let placeholderImage = UIImage(named: "photo-placeholder")
     var resizedImage: UIImage!
-    
+    @IBOutlet var userImageView: UIImageView!
     @IBOutlet var postImageView: UIImageView!
     
     @IBOutlet var postTextView: UITextView!
@@ -24,6 +24,8 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBOutlet var postButton: UIBarButtonItem!
     
     override func viewDidLoad() {
+        userImageView.layer.cornerRadius = userImageView.bounds.width / 2.0
+        userImageView.layer.masksToBounds = true
         super.viewDidLoad()
         
         postImageView.image = placeholderImage
@@ -35,6 +37,19 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        let file = NCMBFile.file(withName: NCMBUser.current()?.objectId, data: nil)as!NCMBFile
+        file.getDataInBackground { (data, error) in
+            if error != nil{
+                print(error)
+            }else{
+                if data != nil {
+                    let image = UIImage(data: data!)
+                    self.userImageView.image = image
+                }
+            }
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
@@ -64,9 +79,6 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
     }
-
-   
-    
     // 画像を選択する
     @IBAction func selectImage() {
         let alertController = UIAlertController(title: "画像選択", message: "シェアする画像を選択して下さい。", preferredStyle: .actionSheet)
@@ -152,8 +164,8 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
                         self.postTextView.text = nil
                         self.tabBarController?.selectedIndex = 0
                         self.dismiss(animated: true, completion: nil)
-                        self.navigationController?.popViewController(animated: true)
-                       self.presentingViewController?.presentingViewController?.dismiss(animated: true,completion: nil)
+                    //    self.navigationController?.popViewController(animated: true)
+                    //   self.presentingViewController?.presentingViewController?.dismiss(animated: true,completion: nil)
                         
                     }
                     
@@ -176,6 +188,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate,UITex
     @IBAction func cancel() {
      //    self.navigationController?.popViewController(animated: true)
        dismiss(animated: true, completion: nil)
-      self.navigationController?.popViewController(animated: true)
+    //  self.navigationController?.popViewController(animated: true)
 }
 }
+

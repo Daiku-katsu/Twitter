@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E07C2C0230980EC001B5ED5 /* ReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E07C2BF230980EC001B5ED5 /* ReplyViewController.swift */; };
+		0E07C2C2230E3542001B5ED5 /* BorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E07C2C1230E3542001B5ED5 /* BorderButton.swift */; };
 		0E57C69222FC531D008C2456 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57C69122FC531C008C2456 /* MenuViewController.swift */; };
 		0E57C69422FC5869008C2456 /* icons8-追加-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E57C69322FC5869008C2456 /* icons8-追加-64.png */; };
 		0E57C69622FD26E3008C2456 /* MyProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E57C69522FD26E3008C2456 /* MyProfileEditViewController.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		0E07C2BF230980EC001B5ED5 /* ReplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyViewController.swift; sourceTree = "<group>"; };
+		0E07C2C1230E3542001B5ED5 /* BorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButton.swift; sourceTree = "<group>"; };
 		0E57C69122FC531C008C2456 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0E57C69322FC5869008C2456 /* icons8-追加-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-追加-64.png"; sourceTree = "<group>"; };
 		0E57C69522FD26E3008C2456 /* MyProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,58 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0E07C2C3230E4C18001B5ED5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E07C2C1230E3542001B5ED5 /* BorderButton.swift */,
+				0E57C6D02306B338008C2456 /* Comment.swift */,
+				0E57C69B22FD36CF008C2456 /* Post.swift */,
+				0E57C69D22FD99F3008C2456 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0E07C2C4230E4C31001B5ED5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0EA6B06F22FAD94E0035B608 /* SignUpViewController.swift */,
+				0EA6B06D22FAD9400035B608 /* SignInViewController.swift */,
+				0E57C69122FC531C008C2456 /* MenuViewController.swift */,
+				0E57C69522FD26E3008C2456 /* MyProfileEditViewController.swift */,
+				0E57C69722FD2C17008C2456 /* MyprofileViewController.swift */,
+				0EA6B03B22FABE0E0035B608 /* ViewController.swift */,
+				0E57C6C423019203008C2456 /* PostViewController.swift */,
+				0E57C6CC2303C82A008C2456 /* HomeViewController.swift */,
+				0E57C6CA2302E0B0008C2456 /* DetailTweetViewController.swift */,
+				0E07C2BF230980EC001B5ED5 /* ReplyViewController.swift */,
+				0E57C6C82302CA3D008C2456 /* UserProfileViewController.swift */,
+				0EA6B06722FAD27A0035B608 /* TweetTableViewCell.swift */,
+				0EA6B06522FAD2490035B608 /* SearchViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0E07C2C5230E4CBB001B5ED5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0EA6B06B22FAD5AD0035B608 /* SignIn.storyboard */,
+				0EA6B06822FAD27A0035B608 /* TweetTableViewCell.xib */,
+				0EA6B03D22FABE0E0035B608 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0E07C2C6230E4D7D001B5ED5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0EA6B03922FABE0E0035B608 /* AppDelegate.swift */,
+				0EA6B04522FABE100035B608 /* Info.plist */,
+				0EA6B04222FABE100035B608 /* LaunchScreen.storyboard */,
+				0EA6B04022FABE100035B608 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		0EA6B02D22FABE0D0035B608 = {
 			isa = PBXGroup;
 			children = (
@@ -130,29 +184,10 @@
 			isa = PBXGroup;
 			children = (
 				0EA6B04C22FAC1690035B608 /* images */,
-				0EA6B03922FABE0E0035B608 /* AppDelegate.swift */,
-				0E57C69B22FD36CF008C2456 /* Post.swift */,
-				0E57C69D22FD99F3008C2456 /* User.swift */,
-				0E57C6D02306B338008C2456 /* Comment.swift */,
-				0EA6B06522FAD2490035B608 /* SearchViewController.swift */,
-				0EA6B03B22FABE0E0035B608 /* ViewController.swift */,
-				0E57C69122FC531C008C2456 /* MenuViewController.swift */,
-				0EA6B06722FAD27A0035B608 /* TweetTableViewCell.swift */,
-				0EA6B06822FAD27A0035B608 /* TweetTableViewCell.xib */,
-				0EA6B03D22FABE0E0035B608 /* Main.storyboard */,
-				0E57C6CC2303C82A008C2456 /* HomeViewController.swift */,
-				0E57C6C423019203008C2456 /* PostViewController.swift */,
-				0E57C69722FD2C17008C2456 /* MyprofileViewController.swift */,
-				0E57C69522FD26E3008C2456 /* MyProfileEditViewController.swift */,
-				0E57C6C82302CA3D008C2456 /* UserProfileViewController.swift */,
-				0E57C6CA2302E0B0008C2456 /* DetailTweetViewController.swift */,
-				0E07C2BF230980EC001B5ED5 /* ReplyViewController.swift */,
-				0EA6B06D22FAD9400035B608 /* SignInViewController.swift */,
-				0EA6B06F22FAD94E0035B608 /* SignUpViewController.swift */,
-				0EA6B06B22FAD5AD0035B608 /* SignIn.storyboard */,
-				0EA6B04022FABE100035B608 /* Assets.xcassets */,
-				0EA6B04222FABE100035B608 /* LaunchScreen.storyboard */,
-				0EA6B04522FABE100035B608 /* Info.plist */,
+				0E07C2C3230E4C18001B5ED5 /* Model */,
+				0E07C2C4230E4C31001B5ED5 /* ViewController */,
+				0E07C2C5230E4CBB001B5ED5 /* Views */,
+				0E07C2C6230E4D7D001B5ED5 /* Resources */,
 			);
 			path = twitter;
 			sourceTree = "<group>";
@@ -350,6 +385,7 @@
 				0E07C2C0230980EC001B5ED5 /* ReplyViewController.swift in Sources */,
 				0E57C69222FC531D008C2456 /* MenuViewController.swift in Sources */,
 				0EA6B06622FAD2490035B608 /* SearchViewController.swift in Sources */,
+				0E07C2C2230E3542001B5ED5 /* BorderButton.swift in Sources */,
 				0E57C6C92302CA3D008C2456 /* UserProfileViewController.swift in Sources */,
 				0E57C6D12306B339008C2456 /* Comment.swift in Sources */,
 				0EA6B06E22FAD9400035B608 /* SignInViewController.swift in Sources */,
@@ -502,9 +538,11 @@
 			baseConfigurationReference = 354C92CED520340CC11B7EA4 /* Pods-twitter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6LK7XN77ZX;
-				INFOPLIST_FILE = twitter/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/twitter/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -521,9 +559,11 @@
 			baseConfigurationReference = E10D458B988BF802322D0B82 /* Pods-twitter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6LK7XN77ZX;
-				INFOPLIST_FILE = twitter/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/twitter/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

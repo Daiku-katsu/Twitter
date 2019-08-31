@@ -22,12 +22,25 @@ class ReplyViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        commentTableView.dataSource = self
-        
-   //     commentTableView.tableFooterView = UIView()
+        userImageView.layer.cornerRadius = userImageView.bounds.width / 2.0
+        userImageView.layer.masksToBounds = true
+        commentTableView.dataSource = self
+        commentTableView.tableFooterView = UIView()
         
         loadComments()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        let file = NCMBFile.file(withName: NCMBUser.current()?.objectId, data: nil)as!NCMBFile
+        file.getDataInBackground { (data, error) in
+            if error != nil{
+                print(error)
+            }else{
+                if data != nil {
+                    let image = UIImage(data: data!)
+                    self.userImageView.image = image
+                }
+            }
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count

@@ -13,8 +13,9 @@ import SideMenu
 import Kingfisher
 
 class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
-
-    var selectedPost: Post?
+    
+     @IBOutlet var replyTextView:UITextView!
+    var selectedPost = [Post]()
      var postId: String!
      var posts = [Post]()
      @IBOutlet var TweetTableView:UITableView!
@@ -32,47 +33,68 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
         
         loadTweet()
         setRefreshControl()
-      //  commentTableView.dataSource = self
-      //  commentTableView.tableFooterView = UIView()
-     //   loadComments()
+        commentTableView.dataSource = self
+        commentTableView.tableFooterView = UIView()
+        loadComments()
     }
     override func viewWillAppear(_ animated: Bool) {
         loadTweet()
+        loadComments()
     }
     @IBAction func back(){
-        dismiss(animated: true, completion:nil)
+        self.dismiss(animated: true, completion:nil)
     }
-   
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return selectedPost.count
+        return comments.count
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")as!TweetTableViewCell
         //内容
-        //  cell.delegate = self
+     //   cell.delegate = self as! TweetTableTableViewCellDelegate
         cell.tag = indexPath.row
         
-        let user = posts[indexPath.row].user
+        let user = selectedPost[indexPath.row].user
         cell.userNameLabel.text = user.displayName
         let userImageUrl = "https://mb.api.cloud.nifty.com/2013-09-01/applications/tXwQtNaLb9632QwL/publicFiles/" + user.objectId
         cell.userImageView.kf.setImage(with: URL(string: userImageUrl), placeholder: UIImage(named: "placeholder.png"))
         
-        cell.commentTextView.text = posts[indexPath.row].text
-        let imageUrl = posts[indexPath.row].imageUrl
+        cell.commentTextView.text = selectedPost[indexPath.row].text
+        let imageUrl = selectedPost[indexPath.row].imageUrl
         cell.photoImageView.kf.setImage(with: URL(string: imageUrl))
         
         // Likeによってハートの表示を変える
-           if posts[indexPath.row].isLiked == true {
+           if selectedPost[indexPath.row].isLiked == true {
             cell.likeButton.setImage(UIImage(named: "heart-fill"), for: .normal)
           } else {
              cell.likeButton.setImage(UIImage(named: "heart-outline"), for: .normal)
           }
         
         // Likeの数
-            cell.likeCountLabel.text = "\(posts[indexPath.row].likeCount)件"
+            cell.likeCountLabel.text = "\(selectedPost[indexPath.row].likeCount)件"
         // タイムスタンプ(投稿日時) (※フォーマットのためにSwiftDateライブラリをimport)
         //  cell.timestampLabel.text = posts[indexPath.row].createDate.string()
-           return cell
+        
+    /*   let cel = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+        let userImageView = cel.viewWithTag(1) as! UIImageView
+        let userNameLabel = cel.viewWithTag(2) as! UILabel
+        let commentLabel = cel.viewWithTag(3) as! UILabel
+        // let createDateLabel = cell.viewWithTag(4) as! UILabel
+        
+        // ユーザー画像を丸く
+        userImageView.layer.cornerRadius = userImageView.bounds.width / 2.0
+        userImageView.layer.masksToBounds = true
+        
+        let user = comments[indexPath.row].user
+        let userImagePath = "https://mb.api.cloud.nifty.com/2013-09-01/applications/tXwQtNaLb9632QwL/publicFiles/" + user.objectId
+        userImageView.kf.setImage(with: URL(string: userImagePath))
+        userNameLabel.text = user.displayName
+        commentLabel.text = comments[indexPath.row].text */
+        
+        return cell
+    //    return cel
     }
     func loadTweet() {
         let query = NCMBQuery(className: "Post")
@@ -80,13 +102,12 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
         // 降順
         query?.order(byDescending: "createDate")
         
-      //  query?.whereKey("user", equalTo: objectId)
+    //    query?.whereKey("user", equalTo: objectId)
         // 投稿したユーザーの情報も同時取得
         query?.includeKey("user")
         
         // フォロー中の人 + 自分の投稿だけ持ってくる
         //   query?.whereKey("user", containedIn: followings)
-        
         
         // オブジェクトの取得
         query?.findObjectsInBackground({ (result, error) in
@@ -94,7 +115,7 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
                 SVProgressHUD.showError(withStatus: error!.localizedDescription)
             } else {
                 // 投稿を格納しておく配列を初期化(これをしないとreload時にappendで二重に追加されてしまう)
-                self.posts = [Post]()
+                self.selectedPost = [Post]()
                 
                 for postObject in result as! [NCMBObject] {
                     // ユーザー情報をUserクラスにセット
@@ -127,15 +148,15 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
                          }
                         
                         // 配列に加える
-                        self.posts.append(post)
+                        self.selectedPost.append(post)
                     }
                 }
-                
                 // 投稿のデータが揃ったらTableViewをリロード
                 self.TweetTableView.reloadData()
             }
             }
         )}
+    
     func setRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(reloadTimeline(refreshControl:)), for: .valueChanged)
@@ -153,7 +174,7 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
     func loadComments() {
         comments = [Comment]()
         let query = NCMBQuery(className: "Comment")
-        query?.whereKey("postId", equalTo: postId)
+       // query?.whereKey("postId", equalTo: postId)
         query?.includeKey("user")
         query?.findObjectsInBackground({ (result, error) in
             if error != nil {
@@ -165,12 +186,16 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
                     let userModel = User(objectId: user.objectId, userName: user.userName)
                     userModel.displayName = user.object(forKey: "displayName") as? String
                     
+                    // 投稿の情報を取得
+        //            let imageUrl = commentObject.object(forKey: "imageUrl") as! String
+                    
                     // コメントの文字を取得
                     let text = commentObject.object(forKey: "text") as! String
                     
                     // Commentクラスに格納　　　//postIdはどうやったら取得できるのか。NCMBへpostIdが入っていない。。
                     
                     let comment = Comment(postId: self.postId, user: userModel, text: text, createDate: commentObject.createDate)
+                    
                     self.comments.append(comment)
                     
                     // テーブルをリロード
@@ -180,19 +205,15 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         })
     }
-    
-    @IBAction func addComment() {
-        let alert = UIAlertController(title: "コメント", message: "コメントを入力して下さい", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .default) { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            alert.dismiss(animated: true, completion: nil)
-            SVProgressHUD.show()
+    @IBAction func reply() {
+        
             let object = NCMBObject(className: "Comment")
             object?.setObject(self.postId, forKey: "postId")
             object?.setObject(NCMBUser.current(), forKey: "user")
-            object?.setObject(alert.textFields?.first?.text, forKey: "text")
+            object?.setObject(replyTextView?.text, forKey: "text")
+          let url = "https://mb.api.cloud.nifty.com/2013-09-01/applications/tXwQtNaLb9632QwL/publicFiles/"
+             object?.setObject(url, forKey: "imageUrl")
+        
             object?.saveInBackground({ (error) in
                 if error != nil {
                     SVProgressHUD.showError(withStatus: error!.localizedDescription)
@@ -202,15 +223,6 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             })
         }
-        
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        alert.addTextField { (textField) in
-            textField.placeholder = "ここにコメントを入力"
-        }
-        self.present(alert, animated: true, completion: nil)
-    }
+    
 }
-
-
 

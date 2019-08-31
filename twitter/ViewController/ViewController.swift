@@ -17,6 +17,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     var selectedPost: Post?
     var posts = [Post]()
+     var followings = [NCMBUser]()
     @IBOutlet var TweetTableView:UITableView!
     //  @IBOutlet var imageButtonItem: UIBarButtonItem!
     override func viewDidLoad() {
@@ -34,6 +35,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         setRefreshControl()
         loadImage()
         loadTweet()
+        // フォロー中のユーザーを取得する。その後にフォロー中のユーザーの投稿のみ読み込み
+     //   loadFollowingUsers()
     }
     override func viewWillAppear(_ animated: Bool) {
         loadImage()
@@ -46,11 +49,18 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             if segue.identifier == "toReply" {
                 let replytViewController = segue.destination as! ReplyViewController
         if segue.identifier == "toDetail" {
-                let detailViewController = segue.destination as! DetailTweetViewController
-                detailViewController.postId = selectedPost?.objectId
+          //      let detailViewController = segue.destination as! DetailTweetViewController
+         //   detailViewController.TweetTableView = sender as!UITableView
+            let tweetViewController = segue.destination as! DetailTweetViewController
+            tweetViewController.postId = selectedPost?.objectId
+      //      let selectedIndex = searchUserTableView.indexPathForSelectedRow!
+      //      showUserViewController.selectedUser = users[selectedIndex.row]
                 }
             }
         }
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "toDetail", sender: posts[indexPath.row])
     }
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -289,5 +299,24 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             refreshControl.endRefreshing()
         }
     }
-    
+  /*  func loadFollowingUsers() {
+        // フォロー中の人だけ持ってくる
+        let query = NCMBQuery(className: "Follow")
+        query?.includeKey("user")
+        query?.includeKey("following")
+        query?.whereKey("user", equalTo: NCMBUser.current())
+        query?.findObjectsInBackground({ (result, error) in
+            if error != nil {
+                SVProgressHUD.showError(withStatus: error!.localizedDescription)
+            } else {
+                self.followings = [NCMBUser]()
+                for following in result as! [NCMBObject] {
+                    self.followings.append(following.object(forKey: "following") as! NCMBUser)
+                }
+          //      self.followings.append(NCMBUser.current())
+                
+                self.loadTweet()
+            }
+        })
+    }*/
 }
