@@ -52,7 +52,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
           //      let detailViewController = segue.destination as! DetailTweetViewController
          //   detailViewController.TweetTableView = sender as!UITableView
             let tweetViewController = segue.destination as! DetailTweetViewController
-            tweetViewController.postId = selectedPost?.objectId
+            tweetViewController.selectedPost = selectedPost
       //      let selectedIndex = searchUserTableView.indexPathForSelectedRow!
       //      showUserViewController.selectedUser = users[selectedIndex.row]
                 }
@@ -171,6 +171,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     //  cell.userImageView.tag = indexPath.row
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedPost = posts[indexPath.row]
         //セルの選択を解除
         tableView.deselectRow(at: indexPath, animated: true)
         //別の画面に遷移

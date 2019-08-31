@@ -15,9 +15,8 @@ import Kingfisher
 class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
      @IBOutlet var replyTextView:UITextView!
-    var selectedPost = [Post]()
+    var selectedPost: Post?
      var postId: String!
-     var posts = [Post]()
      @IBOutlet var TweetTableView:UITableView!
     var comments = [Comment]()
     @IBOutlet var commentTableView: UITableView!
@@ -114,43 +113,6 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
             if error != nil {
                 SVProgressHUD.showError(withStatus: error!.localizedDescription)
             } else {
-                // 投稿を格納しておく配列を初期化(これをしないとreload時にappendで二重に追加されてしまう)
-                self.selectedPost = [Post]()
-                
-                for postObject in result as! [NCMBObject] {
-                    // ユーザー情報をUserクラスにセット
-                    let user = postObject.object(forKey: "user") as! NCMBUser
-                    
-                    // 退会済みユーザーの投稿を避けるため、activeがfalse以外のモノだけを表示
-                    if user.object(forKey: "active") as? Bool != false {
-                        // 投稿したユーザーの情報をUserモデルにまとめる
-                        let userModel = User(objectId: user.objectId, userName: user.userName)
-                        userModel.displayName = user.object(forKey: "displayName") as? String
-                        
-                        // 投稿の情報を取得
-                        let imageUrl = postObject.object(forKey: "imageUrl") as! String
-                        let text = postObject.object(forKey: "text") as! String
-                        
-                        // 2つのデータ(投稿情報と誰が投稿したか?)を合わせてPostクラスにセット
-                        let post = Post(objectId: postObject.objectId, user: userModel, imageUrl: imageUrl, text: text, createDate: postObject.createDate)
-                        
-                        // likeの状況(自分が過去にLikeしているか？)によってデータを挿入
-                                        let likeUsers = postObject.object(forKey: "likeUser") as? [String]
-                         if likeUsers?.contains(NCMBUser.current().objectId) == true {
-                         post.isLiked = true
-                         } else {
-                         post.isLiked = false
-                         }
-                         
-                         // いいねの件数
-                         if let likes = likeUsers {
-                         post.likeCount = likes.count
-                         }
-                        
-                        // 配列に加える
-                        self.selectedPost.append(post)
-                    }
-                }
                 // 投稿のデータが揃ったらTableViewをリロード
                 self.TweetTableView.reloadData()
             }
