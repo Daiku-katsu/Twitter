@@ -44,11 +44,27 @@ class DetailTweetViewController: UIViewController,UITableViewDelegate,UITableVie
         self.dismiss(animated: true, completion:nil)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedPost.count
-        return comments.count
-        
+    enum Section: Int {
+        case Tweet = 0
+        case Comments = 1
+        case MaxNum = 2
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.MaxNum.rawValue
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case Section.Tweet.rawValue:
+            return 1
+        case Section.Comments.rawValue:
+            return comments.count
+        default:
+            return 0
+        }
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")as!TweetTableViewCell
         //内容
